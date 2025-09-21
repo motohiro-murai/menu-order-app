@@ -1,0 +1,38 @@
+{
+  "foods": [
+    {
+      "name": "カレー",
+      "price": 700,
+      "calorie": 850
+    },
+    {
+      "name": "からあげ定食",
+      "price": 900,
+      "calorie": 980
+    }
+  ],
+  "drinks": [
+    {
+      "name": "コーラ",
+      "price": 200,
+      "volume_ml": 350
+    },
+    {
+      "name": "アイスコーヒー",
+      "price": 250,
+      "volume_ml": 300
+    }
+  ],
+  "desserts": [
+    {
+      "name": "プリン",
+      "price": 300,
+      "sugar_g": 22
+    },
+    {
+      "name": "チーズケーキ",
+      "price": 420,
+      "sugar_g": 18
+    }
+  ]
+}
