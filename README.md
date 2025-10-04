@@ -34,6 +34,9 @@ JSONを使ったメニュー保存や拡張も可能です。
 ### インストール
 ```bash
 git clone https://github.com/motohiro-murai/menu-order-app.git
+```
+
+
 cd menu-order-app
 
 ### 実行例
