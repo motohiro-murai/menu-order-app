@@ -9,29 +9,38 @@
       "name": "からあげ定食",
       "price": 900,
       "calorie": 980
+    },
+    {
+      "name": "ラーメン",
+      "price": 980,
+      "calorie": 800
     }
   ],
   "drinks": [
     {
       "name": "コーラ",
       "price": 200,
-      "volume_ml": 350
+      "volume_ml": 350,
+      "sugar_g": 0
     },
     {
       "name": "アイスコーヒー",
       "price": 250,
-      "volume_ml": 300
+      "volume_ml": 300,
+      "sugar_g": 0
     }
   ],
   "desserts": [
     {
       "name": "プリン",
       "price": 300,
+      "calorie": 0,
       "sugar_g": 22
     },
     {
       "name": "チーズケーキ",
       "price": 420,
+      "calorie": 0,
       "sugar_g": 18
     }
   ]
