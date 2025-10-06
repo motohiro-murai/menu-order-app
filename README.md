@@ -30,6 +30,7 @@ JSONを使ったメニュー保存や、管理ページからの追加編集に�
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
 
 
 
