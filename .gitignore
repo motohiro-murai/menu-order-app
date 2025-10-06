@@ -1,7 +1,20 @@
-# Byte-compiled / cache
+# Python
 __pycache__/
-*.py[cod]
-*.egg-info/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+*.sqlite3
+*.log
 
-# OS
+# macOS
 .DS_Store
+
+# VSCode
+.vscode/
+
+# Data
+data/orders.json

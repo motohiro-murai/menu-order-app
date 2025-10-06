@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>管理ページ</h2>
+
+<form method="post" style="background:#fff;padding:1rem;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1);">
+  <label>カテゴリ：</label>
+  <select name="category" required>
+    <option value="Food">Food（フード）</option>
+    <option value="Drink">Drink（ドリンク）</option>
+    <option value="Dessert">Dessert（デザート）</option>
+  </select>
+  <br><br>
+
+  <label>商品名：</label>
+  <input type="text" name="name" required><br><br>
+
+  <label>価格（円）：</label>
+  <input type="number" name="price" min="1" required><br><br>
+
+  <label>カロリー（または容量）:</label>
+  <input type="number" name="extra" min="0"><br><br>
+
+  <button type="submit">追加</button>
+</form>
+
+<hr>
+<h3>現在のメニュー一覧</h3>
+
+<h4>Food（フード）</h4>
+<ul>
+  {% for item in menus.foods %}
+    <li>{{ item.name }} - ¥{{ item.price }} / {{ item.calorie }} kcal</li>
+  {% endfor %}
+</ul>
+
+<h4>Drink（ドリンク）</h4>
+<ul>
+  {% for item in menus.drinks %}
+    <li>{{ item.name }} - ¥{{ item.price }} / {{ item.volume_ml }} ml</li>
+  {% endfor %}
+</ul>
+
+<h4>Dessert（デザート）</h4>
+<ul>
+  {% for item in menus.desserts %}
+    <li>{{ item.name }} - ¥{{ item.price }} / {{ item.calorie }} kcal</li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

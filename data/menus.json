@@ -14,6 +14,11 @@
       "name": "ラーメン",
       "price": 980,
       "calorie": 800
+    },
+    {
+      "name": "うどん",
+      "price": 650,
+      "calorie": 600
     }
   ],
   "drinks": [
@@ -28,6 +33,11 @@
       "price": 250,
       "volume_ml": 300,
       "sugar_g": 0
+    },
+    {
+      "name": "ビール",
+      "price": 800,
+      "volume_ml": 500
     }
   ],
   "desserts": [

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>カート</h2>
+
+{% if not cart %}
+<p>カートは空です。</p>
+{% else %}
+<table>
+  <tr>
+    <th>カテゴリ</th><th>商品</th><th>価格</th><th>数量</th><th>小計</th><th></th>
+  </tr>
+  {% for it in cart %}
+  <tr>
+    <td>{{ it.cat }}</td>
+    <td>{{ it.name }}</td>
+    <td>¥{{ it.price }}</td>
+    <td>
+      <form method="post" action="{{ url_for('view_cart') }}" style="display:flex;gap:.25rem;">
+        <input type="hidden" name="action" value="update">
+        <input type="hidden" name="id" value="{{ it.id }}">
+        <input type="number" name="qty" value="{{ it.qty }}" min="1">
+        <button type="submit">更新</button>
+      </form>
+    </td>
+    <td>¥{{ it.price * it.qty }}</td>
+    <td>
+      <form method="post" action="{{ url_for('view_cart') }}">
+        <input type="hidden" name="action" value="remove">
+        <input type="hidden" name="id" value="{{ it.id }}">
+        <button type="submit">削除</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<p style="text-align:right;font-weight:bold;">合計：¥{{ total }}</p>
+
+<form method="post" action="{{ url_for('checkout') }}">
+  <button type="submit">注文を確定する</button>
+</form>
+{% endif %}
+{% endblock %}

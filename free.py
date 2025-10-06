@@ -1,42 +1,54 @@
-def summarize(selected_items):
-    total_price   = sum(it.price for it in selected_items)
-    total_calorie = sum(getattr(it, "calorie", 0) for it in selected_items)
-    total_volume  = sum(getattr(it, "volume_ml", 0) for it in selected_items)
-    total_sugar   = sum(getattr(it, "sugar_g", 0) for it in selected_items)
-    return total_price, total_calorie, total_volume, total_sugar
+# menu_io.py
+import os, json
+from menu_item import Food, Drink, Dessert
+
+DATA_DIR  = "data"
+DATA_FILE = os.path.join(DATA_DIR, "menus.json")
+
+def load_menus():
+    os.makedirs(DATA_DIR, exist_ok=True)
+
+    # 初回は空テンプレを作成
+    if not os.path.exists(DATA_FILE):
+        with open(DATA_FILE, "w", encoding="utf-8") as f:
+            json.dump({"foods": [], "drinks": [], "desserts": []}, f, ensure_ascii=False, indent=2)
+        return [], [], []
+
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        raw = json.load(f)
+
+    # ---- 取り込み（フォーマットを厳密化 & 後方互換）----
+    foods = [Food(**_pick(d, ["name", "price", "calorie"])) for d in raw.get("foods", [])]
+
+    # ドリンクは金額＋容量のみ（sugar_g は渡さない）
+    drinks = [Drink(**_pick(d, ["name", "price", "volume_ml"])) for d in raw.get("drinks", [])]
+
+    # デザートは糖質のみ。もし誤って "calorie" が入っていたら sugar_g に読み替える
+    desserts_raw = raw.get("desserts", [])
+    desserts = []
+    for d in desserts_raw:
+        dd = dict(d)
+        if "sugar_g" not in dd and "calorie" in dd:
+            # 互換：以前の誤保存(カロリー)を糖質扱いに補正
+            dd["sugar_g"] = dd.get("calorie", 0)
+        desserts.append(Dessert(**_pick(dd, ["name", "price", "sugar_g"])))
+
+    return foods, drinks, desserts
 
 
-def print_receipt(order):
-    """(item, qty) のリスト order を集計してレシート出力"""
-    if not order:
-        
-        print("注文はありませんでした。")
-        return
+def save_menus(foods, drinks, desserts):
+    """現在のメニューを menus.json に保存"""
+    os.makedirs(DATA_DIR, exist_ok=True)
+    data = {
+        "foods":    [{"name": f.name, "price": f.price, "calorie": getattr(f, "calorie", 0)} for f in foods],
+        "drinks":   [{"name": d.name, "price": d.price, "volume_ml": getattr(d, "volume_ml", 0)} for d in drinks],
+        # デザートは sugar_g だけ（calorie は書かない）
+        "desserts": [{"name": s.name, "price": s.price, "sugar_g": getattr(s, "sugar_g", 0)} for s in desserts],
+    }
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
-    from collections import OrderedDict
-    grouped = OrderedDict()
-    for item, qty in order:
-        if item.name in grouped:
-            grouped[item.name]["qty"] += qty
-        else:
-            grouped[item.name] = {"item": item, "qty": qty}
 
-    print("\n🧾 最終注文内容")
-    for name, rec in grouped.items():
-        item = rec["item"]
-        qty  = rec["qty"]
-        print(f"- {item.info()} ×{qty}")
-
-    total_price   = sum(rec["item"].price                  * rec["qty"] for rec in grouped.values())
-    total_calorie = sum(getattr(rec["item"], "calorie", 0) * rec["qty"] for rec in grouped.values())
-    total_volume  = sum(getattr(rec["item"], "volume_ml",0)* rec["qty"] for rec in grouped.values())
-    total_sugar   = sum(getattr(rec["item"], "sugar_g", 0) * rec["qty"] for rec in grouped.values())
-
-    print("\n====== 合計 ======")
-    print(f"💰 金額: {total_price} 円")
-    if total_calorie:
-        print(f"🔥 カロリー: {total_calorie} kcal")
-    if total_volume:
-        print(f"🥤 ドリンク量: {total_volume} ml")
-    if total_sugar:
-        print(f"🍰 糖質: {total_sugar} g")
+def _pick(d: dict, keys: list[str]) -> dict:
+    """辞書 d から指定キーのみ拾って返す（存在するものだけ）"""
+    return {k: d.get(k) for k in keys if k in d}

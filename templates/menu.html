@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>メニュー</h2>
+
+<h3>🍽 Food（フード）</h3>
+<div class="grid">
+  {% for x in catalog if x.cat == "Food" %}
+  <div class="card">
+    <div class="name">{{ x.name }}</div>
+    <div class="price">¥{{ x.price }}</div>
+    {% if x.extra %}<div class="extra">カロリー: {{ x.extra }} kcal</div>{% endif %}
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+      <input type="hidden" name="id" value="{{ x.id }}">
+      <input type="hidden" name="name" value="{{ x.name }}">
+      <input type="hidden" name="price" value="{{ x.price }}">
+      <input type="hidden" name="cat" value="{{ x.cat }}">
+      <input type="number" name="qty" value="1" min="1">
+      <button type="submit">カートに入れる</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+<h3>🥤 Drink（ドリンク）</h3>
+<div class="grid">
+  {% for x in catalog if x.cat == "Drink" %}
+  <div class="card">
+    <div class="name">{{ x.name }}</div>
+    <div class="price">¥{{ x.price }}</div>
+    {% if x.extra %}<div class="extra">内容量: {{ x.extra }} ml</div>{% endif %}
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+      <input type="hidden" name="id" value="{{ x.id }}">
+      <input type="hidden" name="name" value="{{ x.name }}">
+      <input type="hidden" name="price" value="{{ x.price }}">
+      <input type="hidden" name="cat" value="{{ x.cat }}">
+      <input type="number" name="qty" value="1" min="1">
+      <button type="submit">カートに入れる</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+
+<h3>🍰 Dessert（デザート）</h3>
+<div class="grid">
+  {% for x in catalog if x.cat == "Dessert" %}
+  <div class="card">
+    <div class="name">{{ x.name }}</div>
+    <div class="price">¥{{ x.price }}</div>
+    {% if x.extra %}<div class="extra">カロリー: {{ x.extra }} kcal</div>{% endif %}
+    <form method="post" action="{{ url_for('add_to_cart') }}">
+      <input type="hidden" name="id" value="{{ x.id }}">
+      <input type="hidden" name="name" value="{{ x.name }}">
+      <input type="hidden" name="price" value="{{ x.price }}">
+      <input type="hidden" name="cat" value="{{ x.cat }}">
+      <input type="number" name="qty" value="1" min="1">
+      <button type="submit">カートに入れる</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
