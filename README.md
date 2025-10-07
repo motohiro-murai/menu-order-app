@@ -26,7 +26,8 @@ JSONを使ったメニュー保存や、管理ページからの追加編集に�
 
 ## 📸 サンプル画面
 
-![メニュー注文アプリ](screenshot.png)
+![メニュー注文アプリ](scr<img width="1536" height="1024" alt="メニュー注文アプリ画面" src="https://github.com/user-attachments/assets/f32c97f5-d135-4065-a08b-cd1937fb6630" />
+eenshot.png)
 
 
 ## ▶️ 実行方法
